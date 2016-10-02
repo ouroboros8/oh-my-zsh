@@ -11,7 +11,7 @@
 typeset -A OUROBOROS_THEME_RETURN_REPLACEMENTS
 if [[ -z $OUROBOROS_THEME_NO_REPLACEMENT ]] && [[ -z $OUROBOROS_THEME_RETURN_REPLACEMENTS ]]; then
     OUROBOROS_THEME_RETURN_REPLACEMENTS=(
-        0 "%{$fg[green]%}%B✧%b%{$reset_color%}"
+        0   "%{$fg[green]%}%B✧%b%{$reset_color%}"
         130 "%{$fg[yellow]%}✕%{$reset_color%}"
     )
 fi
