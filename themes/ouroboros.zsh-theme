@@ -1,3 +1,8 @@
+#############################
+### Ouroboros's zsh theme ###
+#############################
+
+## Error codes
 # Error codes listed as keys in the OUROBOROS_THEME_RETURN_REPLACEMENTS
 # associative array will be replaced with their value in RPROMPT. It defaults
 # to displaying a green ✧ for success, a yellow ✕ for 130 (the usual result of
@@ -26,10 +31,22 @@ function replaced_return() {
     echo $RETURN
 }
 
+## Virtualenv
+
+function virtualenv_prompt_info(){
+  [[ -n ${VIRTUAL_ENV} ]] || return
+  echo "%{$fg[yellow]%}⦑ ${VIRTUAL_ENV:t} ⦒%{$reset_color%} "
+}
+
+# disables prompt wrangling in virtual_env/bin/activate
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+local PROMPT_SYMBOL="%B${PROMPT_SYMBOL:-◊}%b"
+
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[magenta]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}○%{$fg[magenta]%}"
-ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}%B○%b%{$fg[magenta]%}"
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}$PROMPT_SYMBOL%{$fg[magenta]%}"
+ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}$PROMPT_SYMBOL%{$fg[magenta]%}"
 
-PROMPT='%{$fg[blue]%}%B${PWD/#$HOME/~}%b%{$reset_color%} ${$(git_prompt_info):-%B○%b} %{$reset_color%}'
-RPROMPT="$(replaced_return)"
+PROMPT='%{$fg[yellow]%}$(virtualenv_prompt_info)%{$reset_color%}%{$fg[blue]%}%B${PWD/#$HOME/~}%b%{$reset_color%} ${$(git_prompt_info):-${PROMPT_SYMBOL}} %{$reset_color%}'
+RPROMPT='$(replaced_return)'
