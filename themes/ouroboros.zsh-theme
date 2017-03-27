@@ -16,8 +16,8 @@
 typeset -A OUROBOROS_THEME_RETURN_REPLACEMENTS
 if [[ -z $OUROBOROS_THEME_NO_REPLACEMENT ]] && [[ -z $OUROBOROS_THEME_RETURN_REPLACEMENTS ]]; then
     OUROBOROS_THEME_RETURN_REPLACEMENTS=(
-        0   "%{$fg[green]%}%B✧%b%{$reset_color%}"
-        130 "%{$fg[yellow]%}✕%{$reset_color%}"
+        0   "%{$fg[green]%}%B·%b%{$reset_color%}"
+        130 "%{$fg[yellow]%}X%{$reset_color%}"
     )
 fi
 
@@ -35,18 +35,18 @@ function replaced_return() {
 
 function virtualenv_prompt_info(){
   [[ -n ${VIRTUAL_ENV} ]] || return
-  echo "%{$fg[yellow]%}⦑ ${VIRTUAL_ENV:t} ⦒%{$reset_color%} "
+  echo "%{$fg[yellow]%} ${VIRTUAL_ENV:t} %{$reset_color%}"
 }
 
 # disables prompt wrangling in virtual_env/bin/activate
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-local PROMPT_SYMBOL="%B${PROMPT_SYMBOL:-◊}%b"
+local PROMPT_SYMBOL="%B${PROMPT_SYMBOL:-·}%b"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[magenta]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
 ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}$PROMPT_SYMBOL%{$fg[magenta]%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}$PROMPT_SYMBOL%{$fg[magenta]%}"
 
-PROMPT='%{$fg[yellow]%}$(virtualenv_prompt_info)%{$reset_color%}%{$fg[blue]%}%B${PWD/#$HOME/~}%b%{$reset_color%} ${$(git_prompt_info):-${PROMPT_SYMBOL}} %{$reset_color%}'
+PROMPT='$(virtualenv_prompt_info)%{$fg[blue]%}%B${PWD/#$HOME/~}%b%{$reset_color%} ${$(git_prompt_info):-${PROMPT_SYMBOL}} %{$reset_color%}'
 RPROMPT='$(replaced_return)'
